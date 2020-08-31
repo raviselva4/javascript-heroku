@@ -5,27 +5,7 @@ var firstFilter = true;
 
 // YOUR CODE HERE!
 // 
-// Building unique values into array for Part-1
-// 
-// var uniqueDate = [...new Set(data.map(dt => dt.datetime))];
-// var uniqueCountry = [...new Set(data.map(dt => dt.country))];
-// var uniqueShape = [...new Set(data.map(dt => dt.shape))];
-
-// // Trying to filter based on country selection...
-
-// var uniqueState = [...new Set(data.map(dt => dt.state))];
-
-// // Trying to filter based on country and state
-
-// var uniqueCity = [...new Set(data.map(dt => dt.city))];
-
-// console.log(uniqueDate);
-
-// 
-// Part-1 --> Changing filter to dropdown options  (droppig this option)
-// 
-
-// Part-2 --> Add more Filters
+// Part-1 --> Add more Filters
 // 
 
 // Array of new filters
@@ -64,11 +44,28 @@ for (var i = 0; i < filArray.length; i++) {
     listInput.attr("type", "text");
     listInput.attr("placeholder", "");
 };
-// End of Part-2
+// End of Part-1
+// console.log("End of Part-1....");
+
+// Display all data first.... Part-2
+
+var tbody = d3.select("tbody");
+
+// console.log(tbody);
+
+tableData.forEach((marsdata) => {
+    var row = tbody.append("tr");
+    Object.entries(marsdata).forEach(([key, value]) => {
+        var cell = row.append("td");
+        cell.text(value);
+    });
+    firstFilter = false;
+});
 
 // Part-3 --> Deal with Filter
 // 
 // Select the submit button
+// console.log("Start of Part-2....");
 var filterButton = d3.select("#filter-btn");
 
 // Complete the click handler for the form
@@ -76,6 +73,7 @@ filterButton.on("click", function() {
 
     // Prevent the page from freshing
     d3.event.preventDefault();
+    // console.log("Inside on click....");
 
     // Select the input element and get the row HTML code
     var dateElement = d3.select("#datetime");
@@ -96,43 +94,7 @@ filterButton.on("click", function() {
     var filterValues = {datetime: dateValue, city: cityValue,
     state: stateValue, country: countryValue, shape: shapeValue};
   
-    console.log(filterValues);
-
-    // if (dateValue) 
-    //     filterValues.push({datetime: dateValue});
-    // if (cityValue) 
-    //     filterValues.push({city: cityValue});
-    // if (stateValue) 
-    //     filterValues.push({state: stateValue});
-    // if (countryValue) 
-    //     filterValues.push({country: countryValue});
-    // if (shapeValue) 
-    //     filterValues.push({shape: shapeValue});
-
-    // console.log("Filter Values :", filterValues);
-
-    // Build condition
-
-    // var filterConditions = "";
-    // for (var i = 0; i < filterValues.length; i++) {
-    //     if (i > 0) {
-    //         filterConditions = filterConditions + ")  .filter(data => "; };
-    //     filterConditions = filterConditions + `data.${Object.keys(filterValues[i])} == "${Object.values(filterValues[i])}"`;
-    //     // console.log(filterConditions);
-    // };
-
-    // Use the form input to filter the data
-
-    // console.log("Filter data values: ", dateValue, cityValue, stateValue, countryValue, shapeValue);
-
-    // var filteredData = tableData.filter(data => data.datetime == dateValue)
-    //                             .filter(data => data.city == cityValue)
-    //                             .filter(data => data.state == stateValue)
-    //                             .filter(data => data.country == countryValue)
-    //                             .filter(data => data.shape == shapeValue);
-    
-    // console.log("Before filter apply the string value :", filterConditions);
-    // var filteredData = tableData.filter(data => filterConditions);
+    // console.log(filterValues);
 
     var filteredData = tableData.filter(function(item){
         for (var key in filterValues) {
@@ -146,16 +108,6 @@ filterButton.on("click", function() {
     });
 
     // console.log("Final Filtered Data:", filteredData);
-
-    // Build table based on filter
-    // 
-
-    // Select the table body
-    // var tbody = ""
-    // var tbody = d3.select("tbody").selectAll("tr").remove().selectAll("td").remove();
-    // var tbody = ""
-    
-    // var tbody = d3.select("tbody");
     
     if (!firstFilter) {
         console.log("Not a first try...");
